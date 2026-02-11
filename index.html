@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>La Mala Hora — Rock</title>
+  <meta name="description" content="La Mala Hora — banda de rock. Contratación y contacto." />
+  <meta property="og:title" content="La Mala Hora — Rock" />
+  <meta property="og:description" content="Rock potente desde San Roque, Cádiz. Agenda y contratación." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="" />
+  <style>
+    :root{
+      --bg:#0b0b10; --card:#121320; --ink:#e7e7ec; --muted:#a4a6b3; --accent:#ff3d5a;
+      --brand:#ff3d5a; --brand2:#ff9b3d; --ok:#2ecc71
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Inter,Helvetica,Arial,sans-serif;background:radial-gradient(1200px 800px at 10% 0%, #1a1b2e 0%, var(--bg) 50%),linear-gradient(160deg,#0b0b10 0%, #0b0b10 60%, #11121d 100%);color:var(--ink);}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:980px;margin:0 auto;padding:24px}
+    header{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:18px 0}
+    .logo{display:flex;gap:14px;align-items:center}
+    .logo-badge{width:48px;height:48px;border-radius:14px;background:conic-gradient(from 0deg,var(--brand),var(--brand2),var(--brand));display:grid;place-items:center;box-shadow:0 6px 18px rgba(255,61,90,.25)}
+    .logo-badge span{font-weight:800;color:#111;mix-blend-mode:screen}
+    nav{display:flex;gap:14px;flex-wrap:wrap}
+    nav a{padding:10px 14px;border:1px solid rgba(255,255,255,.08);border-radius:999px;color:var(--muted)}
+    nav a:hover{border-color:rgba(255,255,255,.25);color:var(--ink)}
+    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center}
+    @media (max-width:860px){.hero{grid-template-columns:1fr;}}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:22px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .pad{padding:20px}
+    h1{font-size:clamp(30px,5vw,48px);line-height:1.02;margin:0 0 8px}
+    .tag{display:inline-block;margin:.2rem 0;padding:6px 10px;border:1px solid rgba(255,255,255,.12);border-radius:999px;color:var(--muted);font-size:14px}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    .btn{display:inline-flex;gap:8px;align-items:center;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:#1b1c29;color:var(--ink);font-weight:600}
+    .btn.primary{background:#f5f6fa;color:#222;border:1px solid #d2d3d6;}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.25)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media (max-width:880px){.grid{grid-template-columns:1fr}}
+    h2{margin:0 0 12px;font-size:clamp(22px,3.5vw,30px)}
+    .list{display:grid;gap:8px;color:var(--muted)}
+    footer{opacity:.8;text-align:center;padding:40px 0;color:var(--muted)}
+    .kpi{display:flex;gap:10px;align-items:center;color:var(--muted)}
+    .kpi b{color:var(--ink)}
+    .media-embed{aspect-ratio:16/9;width:100%;border:0;border-radius:14px;overflow:hidden}
+    .contact-card{display:grid;gap:10px}
+    .small{font-size:13px;color:var(--muted)}
+    .pill{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);margin:18px 0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+     <div class="logo">
+      <div class="logo-badge" style="width:80px;height:80px;border-radius:18px;overflow:hidden;box-shadow:0 8px 22px rgba(255,61,90,.28);">
+        <img src="logo.png" alt="Logo La Mala Hora" style="width:100%;height:100%;object-fit:cover;display:block;background:#fff;" onerror="this.src='https://via.placeholder.com/80x80/ff3d5a/000?text=LMH'"/>
+      </div>
+      <div>
+        <div style="letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-size:12px">ROCK</div>
+        <strong style="font-size:18px">La Mala Hora</strong>
+      </div>
+    </div>
+     <nav>
+        <a href="#demo">Demo</a>
+        <a href="#repertorio">Repertorio</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="card pad">
+        <h1>La Mala Hora</h1>
+        <div class="tag" style="color:var(--ink);">
+          Rock potente desde San Roque, Cádiz
+        </div>
+        <p style="color:var(--muted);margin:12px 0 0">Banda de rock con sonido profesional. Bolos en bares, eventos y fiestas. Peticiones especiales bienvenidas.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="javascript:void(0);" onclick="document.getElementById('modal-contacto').style.display='flex';">Reservar fecha</a>
+          <a class="btn" id="add-contact" href="#">Guardar contacto (vCard)</a>
+          <a class="btn" id="copy-link" href="#">Copiar enlace</a>
+        </div>
+        <div class="kpi" style="margin-top:12px">
+          <span class="pill">✔ Sonido profesional</span>
+          <span class="pill">✔ Repertorio flexible</span>
+          <span class="pill">✔ Peticiones OK</span>
+        </div>
+      </div>
+      <div class="card pad">
+        <h2 id="demo">Escucha rápida</h2>
+        <p class="small">Pon aquí tu vídeo de muestra de YouTube</p>
+        <iframe class="media-embed" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <section style="margin-top:22px" class="grid">
+      <div class="card pad">
+        <h2 id="repertorio">Repertorio (selección)</h2>
+        <div class="list">
+          <div>Rock clásico • Hard rock • Directo potente</div>
+          <div>Adaptamos setlist a cada bolo</div>
+          <div>Peticiones especiales bienvenidas</div>
+          <div class="small">Bares, plazas, eventos privados y festivales.</div>
+        </div>
+      </div>
+      <div class="card pad">
+        <h2>Prensa / Técnica</h2>
+        <div class="list">
+          <div>Formato: banda completa rock</div>
+          <div>Backline profesional completo</div>
+          <div>Rider: escenario 5×4m, 230V</div>
+        </div>
+      </div>
+      <div class="card pad contact-card" id="contacto">
+        <h2>Contacto</h2>
+
+        <!-- Teléfono principal -->
+        <a class="btn" href="tel:+34667638839">📞 +34 667 63 88 39</a>
+
+        <!-- Email -->
+        <a class="btn" href="mailto:lamalahorasanroque@gmail.com">✉️ lamalahorasanroque@gmail.com</a>
+
+        <!-- WhatsApp -->
+        <a class="btn" href="https://wa.me/34667638839?text=Hola%20La%20Mala%20Hora%2C%20quiero%20info%20para%20un%20bolo">
+          💬 WhatsApp
+        </a>
+
+        <div class="divider"></div>
+        <div class="list small">
+          <div>Instagram: <a href="https://instagram.com/lamalahora" target="_blank">@lamalahora</a></div>
+          <div>YouTube: <a href="#" target="_blank">Canal oficial</a></div>
+          <div>Base: San Roque, Cádiz</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="y"></span> La Mala Hora · Tarjeta digital
+    </footer>
+  </div>
+
+  <script>
+    // Año dinámico
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // vCard automática con tus datos
+    const vcard = `BEGIN:VCARD
+VERSION:3.0
+N:;La Mala Hora;;;
+FN:La Mala Hora
+ORG:La Mala Hora (Rock - San Roque)
+TITLE:Banda de Rock
+TEL;TYPE=CELL;TYPE=VOICE;PREF=1:+34667638839
+EMAIL;TYPE=INTERNET;TYPE=WORK:lamalahorasanroque@gmail.com
+URL:https://lamalahora-web.vercel.app
+NOTE:Rock desde San Roque, Cádiz
+END:VCARD`;
+
+    const vBlob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+    const vUrl = URL.createObjectURL(vBlob);
+    const addBtn = document.getElementById('add-contact');
+    addBtn.addEventListener('click', (e)=>{ e.preventDefault(); const a=document.createElement('a'); a.href=vUrl; a.download='LaMalaHora.vcf'; a.click(); });
+
+    // Copiar enlace
+    const copyBtn = document.getElementById('copy-link');
+    copyBtn.addEventListener('click', async (e)=>{
+      e.preventDefault();
+      try{
+        await navigator.clipboard.writeText(window.location.href);
+        copyBtn.textContent = 'Enlace copiado ✅';
+        setTimeout(()=>copyBtn.textContent='Copiar enlace',1600);
+      }catch(err){
+        alert('No se pudo copiar. Copia manualmente de la barra del navegador.');
+      }
+    });
+  </script>
+
+  <div id="modal-contacto" style="display:none; position:fixed; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.72); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:#222; color:#fff; padding:38px 28px; border-radius:20px; min-width:260px; box-shadow:0 8px 40px #000; max-width:90vw; text-align:center; position:relative;">
+      <strong style="font-size:22px;">Contacto La Mala Hora</strong>
+      <div style="margin:16px 0 18px;">
+        <div style="margin-bottom:8px;"><a style="color:#e84862;" href="tel:+34667638839">667 63 88 39</a></div>
+        <div><a style="color:#e84862;" href="mailto:lamalahorasanroque@gmail.com">lamalahorasanroque@gmail.com</a></div>
+      </div>
+      <button onclick="document.getElementById('modal-contacto').style.display='none';" style="background:#fff; color:#111; border-radius:8px; border:none; padding:8px 22px; font-weight:bold; cursor:pointer;">Cerrar</button>
+    </div>
+  </div>
+</body>
+</html>
+
