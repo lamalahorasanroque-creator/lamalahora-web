@@ -32,38 +32,54 @@
       align-items:center;
       justify-content:space-between;
       padding:18px 0;
-      flex-wrap:wrap; /* importante con logo grande */
+      flex-wrap:wrap;
     }
 
     .logo{display:flex;gap:14px;align-items:center}
 
-    /* FOTO ARRIBA como "logo" grande */
+    /* FOTO ARRIBA (grande y legible) */
     .logo-badge{
-      width:120px;
-      height:120px;
-      border-radius:22px;
+      width:190px;
+      height:190px;
+      border-radius:28px;
       overflow:hidden;
       background:#fff;
-      box-shadow:0 10px 28px rgba(255,61,90,.28);
+      box-shadow:0 12px 34px rgba(255,61,90,.28);
       flex:0 0 auto;
     }
     .logo-badge img{
       width:100%;
       height:100%;
-      object-fit:cover;
       display:block;
+      object-fit:cover;
+      object-position:50% 12%; /* sube el encuadre para ver texto de arriba */
     }
+
     @media (max-width:560px){
-      .logo-badge{width:90px;height:90px;border-radius:18px;}
+      .logo-badge{
+        width:140px;
+        height:140px;
+        border-radius:22px;
+      }
     }
 
     nav{display:flex;gap:14px;flex-wrap:wrap;margin-left:auto}
-    nav a{padding:10px 14px;border:1px solid rgba(255,255,255,.08);border-radius:999px;color:var(--muted)}
+    nav a{
+      padding:10px 14px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:999px;
+      color:var(--muted)
+    }
     nav a:hover{border-color:rgba(255,255,255,.25);color:var(--ink)}
 
     .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center}
     @media (max-width:860px){.hero{grid-template-columns:1fr;}}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:22px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .card{
+      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:22px;
+      box-shadow:0 10px 30px rgba(0,0,0,.35)
+    }
     .pad{padding:20px}
     h1{font-size:clamp(30px,5vw,48px);line-height:1.02;margin:0 0 8px}
     .tag{display:inline-block;margin:.2rem 0;padding:6px 10px;border:1px solid rgba(255,255,255,.12);border-radius:999px;color:var(--muted);font-size:14px}
@@ -91,7 +107,7 @@
     <header>
       <div class="logo">
         <div class="logo-badge">
-          <img src="foto-arriba.jpg" alt="La Mala Hora">
+          <img src="/foto-arriba.jpg" alt="La Mala Hora">
         </div>
         <div>
           <div style="letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-size:12px">ROCK</div>
