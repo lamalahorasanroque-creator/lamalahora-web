@@ -52,7 +52,7 @@
       height:100%;
       display:block;
       object-fit:cover;
-      object-position:50% 12%; /* sube el encuadre para ver texto de arriba */
+      object-position:50% 12%;
     }
 
     @media (max-width:560px){
@@ -109,10 +109,6 @@
         <div class="logo-badge">
           <img src="/foto-arriba.jpg" alt="La Mala Hora">
         </div>
-        <div>
-          <div style="letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-size:12px">ROCK</div>
-          <strong style="font-size:18px">La Mala Hora</strong>
-        </div>
       </div>
 
       <nav>
@@ -124,11 +120,8 @@
 
     <section class="hero">
       <div class="card pad">
-        <h1>La Mala Hora</h1>
-        <div class="tag" style="color:var(--ink);">
-          Rock potente desde San Roque, Cádiz
-        </div>
-        <p style="color:var(--muted);margin:12px 0 0">Banda de rock con sonido profesional. Bolos en bares, eventos y fiestas. Peticiones especiales bienvenidas.</p>
+        <!-- Quitados: h1 "La Mala Hora" y la tag "Rock potente desde San Roque, Cádiz" -->
+        <p style="color:var(--muted);margin:0">Banda de rock con sonido profesional. Bolos en bares, eventos y fiestas. Peticiones especiales bienvenidas.</p>
 
         <div class="cta-row">
           <a class="btn primary" href="javascript:void(0);" onclick="document.getElementById('modal-contacto').style.display='flex';">Reservar fecha</a>
