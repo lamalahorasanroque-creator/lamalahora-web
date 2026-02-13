@@ -176,7 +176,7 @@
       .fb-embed{ height:520px; }
     }
 
-    /* ===== Modal Reservar fecha: MISMO FONDO QUE LAS CARDS + pulso suave ===== */
+    /* ===== Modal Reservar fecha: MISMO estilo que .card + pulso suave ===== */
     #modal-contacto{
       display:none;
       position:fixed;
@@ -190,19 +190,20 @@
     }
 
     .modal-card{
-      /* EXACTAMENTE el mismo estilo que .card pero con pulso */
+      /* CLAVADO a .card */
       background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:22px;
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+
       color:var(--ink);
       padding:38px 28px;
-      border-radius:20px;
       min-width:260px;
       max-width:90vw;
       text-align:center;
-      box-shadow:0 10px 30px rgba(0,0,0,.55);
-      animation: pulseModal 3.5s ease-in-out infinite;
+
+      /* pulso lento elegante */
+      animation: pulseModal 3.8s ease-in-out infinite;
     }
 
     .modal-title{font-size:22px; display:block;}
@@ -220,16 +221,23 @@
     /* Pulso lento y sutil - llama la atención sin molestar */
     @keyframes pulseModal{
       0%, 100%{
-        box-shadow:0 10px 30px rgba(0,0,0,.55);
         transform:scale(1);
-        border-color:rgba(255,255,255,.12);
+        box-shadow:0 10px 30px rgba(0,0,0,.35);
+        border-color:rgba(255,255,255,.08);
+        filter: brightness(1);
       }
       50%{
-        box-shadow:0 10px 45px rgba(0,0,0,.70), 0 0 20px rgba(255,61,90,.35);
         transform:scale(1.03);
-        border-color:rgba(255,255,255,.30);
+        box-shadow:
+          0 10px 45px rgba(0,0,0,.55),
+          0 0 22px rgba(255,61,90,.35);
+        border-color:rgba(255,255,255,.22);
+        filter: brightness(1.08);
       }
     }
+
+    /* cuando el modal está abierto, bloqueamos scroll */
+    body.modal-open{ overflow:hidden; }
   </style>
 </head>
 
@@ -262,7 +270,7 @@
         </p>
 
         <div class="cta-row">
-          <a class="btn primary" href="javascript:void(0);" onclick="document.getElementById('modal-contacto').style.display='flex';">Reservar fecha</a>
+          <a class="btn primary" href="#" id="open-modal">Reservar fecha</a>
           <a class="btn" id="add-contact" href="#">Guardar contacto (vCard)</a>
           <a class="btn" id="copy-link" href="#">Copiar enlace</a>
           <a class="btn" href="https://www.facebook.com/lamalahorasanroque" target="_blank" rel="noopener">📘 Facebook</a>
@@ -348,11 +356,56 @@
     </footer>
   </div>
 
+  <!-- Modal Reservar fecha -->
+  <div id="modal-contacto" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-label="Contacto La Mala Hora">
+      <strong class="modal-title">Contacto La Mala Hora</strong>
+
+      <div class="modal-links">
+        <div><a href="tel:+34667638839">667 63 88 39</a></div>
+        <div><a href="mailto:lamalahorasanroque@gmail.com">lamalahorasanroque@gmail.com</a></div>
+      </div>
+
+      <button class="modal-close" type="button" id="close-modal">
+        Cerrar
+      </button>
+    </div>
+  </div>
+
   <script>
     // Año dinámico
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // vCard automática
+    // ===== Modal (abrir/cerrar) =====
+    const modal = document.getElementById('modal-contacto');
+    const openModalBtn = document.getElementById('open-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+
+    function openModal(){
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden','false');
+      document.body.classList.add('modal-open');
+    }
+    function closeModal(){
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+      document.body.classList.remove('modal-open');
+    }
+
+    openModalBtn.addEventListener('click', (e)=>{ e.preventDefault(); openModal(); });
+    closeModalBtn.addEventListener('click', closeModal);
+
+    // Cerrar clicando fuera
+    modal.addEventListener('click', (e)=>{
+      if(e.target === modal) closeModal();
+    });
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+    });
+
+    // ===== vCard automática =====
     const vcard = `BEGIN:VCARD
 VERSION:3.0
 N:;La Mala Hora;;;
@@ -376,7 +429,7 @@ END:VCARD`;
       a.click();
     });
 
-    // Copiar enlace
+    // ===== Copiar enlace =====
     const copyBtn = document.getElementById('copy-link');
     copyBtn.addEventListener('click', async (e)=>{
       e.preventDefault();
@@ -389,21 +442,5 @@ END:VCARD`;
       }
     });
   </script>
-
-  <!-- Modal Reservar fecha - AHORA CON EL MISMO FONDO QUE LAS CARDS -->
-  <div id="modal-contacto">
-    <div class="modal-card">
-      <strong class="modal-title">Contacto La Mala Hora</strong>
-
-      <div class="modal-links">
-        <div><a href="tel:+34667638839">667 63 88 39</a></div>
-        <div><a href="mailto:lamalahorasanroque@gmail.com">lamalahorasanroque@gmail.com</a></div>
-      </div>
-
-      <button class="modal-close" onclick="document.getElementById('modal-contacto').style.display='none';">
-        Cerrar
-      </button>
-    </div>
-  </div>
 </body>
 </html>
