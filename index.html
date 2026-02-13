@@ -6,7 +6,7 @@
   <title>La Mala Hora — Rock</title>
   <meta name="description" content="La Mala Hora — banda de rock. Contratación y contacto." />
   <meta property="og:title" content="La Mala Hora — Rock" />
-  <meta property="og:description" content="Rock potente desde San Roque, Cádiz. Agenda y contratación." />
+  <meta property="og:description" content="La Mala Hora — banda de rock. Contratación y contacto." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="" />
 
@@ -80,66 +80,60 @@
       max-width:100%;
     }
 
-   nav a{
-  padding:10px 14px;
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:999px;
-  color:var(--muted);
-  background: rgba(255,255,255,.09);   /* <-- más visible */
-  backdrop-filter: blur(6px);          /* opcional, queda guay */
-}
+    nav{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-left:auto;
+      margin-top:28px; /* más separado del logo/foto */
+    }
+    nav a{
+      padding:10px 14px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      color:var(--muted);
+      background: rgba(255,255,255,.11); /* un pelín más claro */
+      backdrop-filter: blur(6px);
+    }
+    nav a:hover{
+      border-color:rgba(255,255,255,.28);
+      color:var(--ink);
+      background: rgba(255,255,255,.16);
+    }
 
-nav a:hover{
-  border-color:rgba(255,255,255,.28);
-  color:var(--ink);
-  background: rgba(255,255,255,.14);   /* <-- hover más claro */
-}
-
-    /* ===== MÓVIL: LOGO IZQUIERDA GRANDE + FOTO DERECHA MÁS PEQUEÑA ===== */
+    /* ===== MÓVIL: LOGO IZQ grande + FOTO DCHA pequeña y bajada ===== */
     @media (max-width:560px){
-  .logo{
-    flex-wrap:nowrap;
-    width:100%;
-    align-items:center;
-    gap:10px; /* un pelín menos para ganar espacio */
-  }
+      .logo{
+        flex-wrap:nowrap;
+        width:100%;
+        align-items:center;
+        gap:10px;
+      }
+      .logo-mark{ order:1; }
+      .logo-badge{ order:2; }
 
-  /* Orden: logo primero, foto después */
-  .logo-mark{ order:1; }
-  .logo-badge{ order:2; }
+      .logo-mark{
+        height:155px;        /* logo grande */
+        flex:1 1 auto;
+        min-width:0;
+        justify-content:flex-start;
+      }
 
-  /* Logo más grande */
-  .logo-mark{
-    height:155px;
-    flex:1 1 auto;
-    min-width:0;
-    justify-content:flex-start;
-  }
-  .logo-mark img{
-    height:100%;
-    max-width:100%;
-    width:auto;
-    object-fit:contain;
-  }
+      .logo-badge{
+        width:85px;          /* foto más chica */
+        height:85px;
+        border-radius:14px;
+        flex:0 0 auto;
+        transform: translateY(40px); /* bajada a la altura que querías */
+      }
 
-  /* Foto más pequeña */
-  .logo-badge{
-    width:80px;
-    height:80px;
-    border-radius:13px;
-    flex:0 0 auto;
-    transform: translateY(40px);
- }
-
-
-  /* Menú debajo y centrado */
-  nav{
-    width:100%;
-    justify-content:center;
-    margin-left:0;
-    margin-top:32px; /* <-- en móvil más aire */ }
-}
-
+      nav{
+        width:100%;
+        justify-content:center;
+        margin-left:0;
+        margin-top:32px;     /* aún más aire en móvil */
+      }
+    }
 
     .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center}
     @media (max-width:860px){.hero{grid-template-columns:1fr;}}
@@ -163,11 +157,26 @@ nav a:hover{
     footer{opacity:.8;text-align:center;padding:40px 0;color:var(--muted)}
     .kpi{display:flex;gap:10px;align-items:center;color:var(--muted)}
     .kpi b{color:var(--ink)}
-    .media-embed{aspect-ratio:16/9;width:100%;border:0;border-radius:14px;overflow:hidden}
     .contact-card{display:grid;gap:10px}
     .small{font-size:13px;color:var(--muted)}
     .pill{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
     .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);margin:18px 0}
+
+    /* Facebook embed */
+    .fb-wrap{
+      width:100%;
+      border-radius:14px;
+      overflow:hidden;
+    }
+    .fb-embed{
+      width:100%;
+      height:560px;
+      border:0;
+      display:block;
+    }
+    @media (max-width:560px){
+      .fb-embed{ height:520px; }
+    }
   </style>
 </head>
 
@@ -185,7 +194,7 @@ nav a:hover{
       </div>
 
       <nav>
-        <a href="#videos">Videos</a>
+        <a href="#facebook">Facebook</a>
         <a href="#musicos">Músicos</a>
         <a href="#contacto">Contacto</a>
       </nav>
@@ -203,6 +212,7 @@ nav a:hover{
           <a class="btn primary" href="javascript:void(0);" onclick="document.getElementById('modal-contacto').style.display='flex';">Reservar fecha</a>
           <a class="btn" id="add-contact" href="#">Guardar contacto (vCard)</a>
           <a class="btn" id="copy-link" href="#">Copiar enlace</a>
+          <a class="btn" href="https://www.facebook.com/lamalahorasanroque" target="_blank" rel="noopener">📘 Facebook</a>
         </div>
 
         <div class="kpi" style="margin-top:12px">
@@ -213,9 +223,20 @@ nav a:hover{
       </div>
 
       <div class="card pad">
-        <h2 id="videos">Escucha rápida</h2>
-        <p class="small">Síguenos en Facebook</p>
-        <iframe class="media-embed" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+        <h2 id="facebook">Facebook</h2>
+        <p class="small">Últimas publicaciones de nuestra página:</p>
+
+        <div class="fb-wrap">
+          <iframe
+            class="fb-embed"
+            src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flamalahorasanroque&tabs=timeline&width=500&height=560&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false"
+            style="border:none;overflow:hidden"
+            scrolling="no"
+            frameborder="0"
+            allowfullscreen="true"
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+          </iframe>
+        </div>
       </div>
     </section>
 
@@ -252,8 +273,8 @@ nav a:hover{
         <div class="divider"></div>
 
         <div class="list small">
-          <div>Instagram: <a href="https://instagram.com/lamalahora" target="_blank">@lamalahora</a></div>
-          <div>YouTube: <a href="#" target="_blank">Canal oficial</a></div>
+          <div>Instagram: <a href="https://instagram.com/lamalahora" target="_blank" rel="noopener">@lamalahora</a></div>
+          <div>YouTube: <a href="#" target="_blank" rel="noopener">Canal oficial</a></div>
           <div>Base: San Roque, Cádiz</div>
         </div>
       </div>
@@ -265,8 +286,10 @@ nav a:hover{
   </div>
 
   <script>
+    // Año dinámico
     document.getElementById('y').textContent = new Date().getFullYear();
 
+    // vCard automática
     const vcard = `BEGIN:VCARD
 VERSION:3.0
 N:;La Mala Hora;;;
@@ -290,6 +313,7 @@ END:VCARD`;
       a.click();
     });
 
+    // Copiar enlace
     const copyBtn = document.getElementById('copy-link');
     copyBtn.addEventListener('click', async (e)=>{
       e.preventDefault();
