@@ -10,6 +10,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:image" content="" />
 
+  <!-- BUILD_MARKER_PULSE_V2 -->
+
   <style>
     :root{
       --bg:#0b0b10; --card:#121320; --ink:#e7e7ec; --muted:#a4a6b3; --accent:#ff3d5a;
@@ -154,7 +156,12 @@
     .pill{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
     .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);margin:18px 0}
     .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
-    .btn{display:inline-flex;gap:8px;align-items:center;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:#1b1c29;color:var(--ink);font-weight:600}
+    .btn{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:12px 16px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:#1b1c29;color:var(--ink);font-weight:600
+    }
     .btn.primary{background:#f5f6fa;color:#222;border:1px solid #d2d3d6;}
     .btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.25)}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -176,7 +183,7 @@
       .fb-embed{ height:520px; }
     }
 
-    /* ===== Modal Reservar fecha: MISMO estilo que .card + pulso suave ===== */
+    /* ===== Modal Reservar fecha ===== */
     #modal-contacto{
       display:none;
       position:fixed;
@@ -190,7 +197,7 @@
     }
 
     .modal-card{
-      /* CLAVADO a .card */
+      /* MISMO estilo que .card */
       background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
       border:1px solid rgba(255,255,255,.08);
       border-radius:22px;
@@ -202,8 +209,9 @@
       max-width:90vw;
       text-align:center;
 
-      /* pulso lento elegante */
-      animation: pulseModal 3.8s ease-in-out infinite;
+      /* pulso */
+      animation: pulseModal 3.6s ease-in-out infinite !important;
+      will-change: transform, box-shadow, filter;
     }
 
     .modal-title{font-size:22px; display:block;}
@@ -218,7 +226,6 @@
       cursor:pointer;
     }
 
-    /* Pulso lento y sutil - llama la atención sin molestar */
     @keyframes pulseModal{
       0%, 100%{
         transform:scale(1);
@@ -236,8 +243,35 @@
       }
     }
 
-    /* cuando el modal está abierto, bloqueamos scroll */
-    body.modal-open{ overflow:hidden; }
+    /* ====== LLAMADA DE ATENCIÓN EN EL BOTÓN “Reservar fecha” (SIEMPRE VISIBLE) ====== */
+    #open-modal{
+      background: rgba(255,255,255,.11) !important;
+      border: 1px solid rgba(255,255,255,.14) !important;
+      color: var(--ink) !important;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+
+      animation: pulseCTA 2.6s ease-in-out infinite;
+      will-change: transform, box-shadow, filter;
+    }
+
+    @keyframes pulseCTA{
+      0%,100%{
+        transform: translateY(0) scale(1);
+        box-shadow: none;
+        filter: brightness(1);
+      }
+      50%{
+        transform: translateY(-1px) scale(1.03);
+        box-shadow: 0 10px 30px rgba(0,0,0,.35), 0 0 18px rgba(255,61,90,.45);
+        filter: brightness(1.12);
+      }
+    }
+
+    /* si el usuario prefiere menos movimiento (accesibilidad) */
+    @media (prefers-reduced-motion: reduce){
+      #open-modal, .modal-card{ animation: none !important; }
+    }
   </style>
 </head>
 
@@ -270,7 +304,8 @@
         </p>
 
         <div class="cta-row">
-          <a class="btn primary" href="#" id="open-modal">Reservar fecha</a>
+          <!-- IMPORTANTE: SIN onclick. Lo maneja JS y CSS con id="open-modal" -->
+          <a class="btn" href="#" id="open-modal">Reservar fecha</a>
           <a class="btn" id="add-contact" href="#">Guardar contacto (vCard)</a>
           <a class="btn" id="copy-link" href="#">Copiar enlace</a>
           <a class="btn" href="https://www.facebook.com/lamalahorasanroque" target="_blank" rel="noopener">📘 Facebook</a>
@@ -381,21 +416,20 @@
     const openModalBtn = document.getElementById('open-modal');
     const closeModalBtn = document.getElementById('close-modal');
 
-    function openModal(){
+    openModalBtn.addEventListener('click', (e)=>{
+      e.preventDefault();
       modal.style.display = 'flex';
       modal.setAttribute('aria-hidden','false');
-      document.body.classList.add('modal-open');
-    }
+    });
+
     function closeModal(){
       modal.style.display = 'none';
       modal.setAttribute('aria-hidden','true');
-      document.body.classList.remove('modal-open');
     }
 
-    openModalBtn.addEventListener('click', (e)=>{ e.preventDefault(); openModal(); });
     closeModalBtn.addEventListener('click', closeModal);
 
-    // Cerrar clicando fuera
+    // Cerrar clicando fuera (sobre el overlay)
     modal.addEventListener('click', (e)=>{
       if(e.target === modal) closeModal();
     });
