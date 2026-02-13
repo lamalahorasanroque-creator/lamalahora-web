@@ -89,9 +89,8 @@
     }
     nav a:hover{border-color:rgba(255,255,255,.25);color:var(--ink)}
 
-    /* ===== MÓVIL: LOGO IZQUIERDA + FOTO DERECHA (como tu mock) ===== */
+    /* ===== MÓVIL: LOGO IZQUIERDA GRANDE + FOTO DERECHA MÁS PEQUEÑA ===== */
     @media (max-width:560px){
-      /* una sola fila */
       .logo{
         flex-wrap:nowrap;
         width:100%;
@@ -102,12 +101,12 @@
       .logo-mark{ order:1; }
       .logo-badge{ order:2; }
 
-      /* Tamaños estilo “logo grande + foto pequeña” */
+      /* Logo más grande */
       .logo-mark{
-        height:120px;
+        height:140px;
         flex:1 1 auto;
         min-width:0;
-        justify-content:flex-start; /* que arranque a la izquierda */
+        justify-content:flex-start;
       }
       .logo-mark img{
         height:100%;
@@ -116,10 +115,11 @@
         object-fit:contain;
       }
 
+      /* Foto un pelín más pequeña */
       .logo-badge{
-        width:120px;
-        height:120px;
-        border-radius:22px;
+        width:110px;
+        height:110px;
+        border-radius:18px;
         flex:0 0 auto;
       }
 
