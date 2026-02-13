@@ -124,7 +124,7 @@
         height:85px;
         border-radius:14px;
         flex:0 0 auto;
-        transform: translateY(40px); /* bajada a la altura que querías */
+        transform: translateY(40px); /* bajada */
       }
 
       nav{
@@ -176,6 +176,53 @@
     }
     @media (max-width:560px){
       .fb-embed{ height:520px; }
+    }
+
+    /* ===== Modal Reservar fecha: mismo look que pestañas + pulso lento ===== */
+    #modal-contacto{
+      display:none;
+      position:fixed;
+      left:0; top:0;
+      width:100vw; height:100vh;
+      background:rgba(0,0,0,0.72);
+      z-index:1000;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .modal-card{
+      background: rgba(255,255,255,.11);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      color:var(--ink);
+      padding:38px 28px;
+      border-radius:20px;
+      min-width:260px;
+      max-width:90vw;
+      text-align:center;
+      position:relative;
+
+      box-shadow:0 10px 50px rgba(0,0,0,.55);
+      animation: pulseModal 2.8s ease-in-out infinite;
+    }
+
+    @keyframes pulseModal{
+      0%, 100%{
+        box-shadow:0 10px 50px rgba(0,0,0,.55), 0 0 0 rgba(255,61,90,.00);
+        border-color:rgba(255,255,255,.14);
+        background: rgba(255,255,255,.11);
+      }
+      50%{
+        box-shadow:0 10px 55px rgba(0,0,0,.60), 0 0 22px rgba(255,61,90,.30);
+        border-color:rgba(255,255,255,.28);
+        background: rgba(255,255,255,.15);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .modal-card{ animation:none; }
     }
   </style>
 </head>
@@ -242,26 +289,33 @@
 
     <section style="margin-top:22px" class="grid">
       <div class="card pad">
-  <h2 id="musicos">Músicos</h2>
+        <h2 id="musicos">Músicos</h2>
 
-  <div class="list">
-    <div class="small" style="margin-bottom:6px;">Componentes</div>
+        <div class="list">
+          <div class="small" style="margin-bottom:6px;">Componentes</div>
 
-    <div><b style="color:var(--ink)">Jesús Montes</b> — voz principal, coros</div>
-    <div><b style="color:var(--ink)">Iván Fernández</b> — batería, voz, coros</div>
-    <div><b style="color:var(--ink)">Manolo Sueiro</b> — guitarra rítmica, voz, coros</div>
-    <div><b style="color:var(--ink)">Alberto Mateos</b> — guitarra solista</div>
-    <div><b style="color:var(--ink)">Josema Albarracín</b> — bajo</div>
+          <div><b style="color:var(--ink)">Jesús Montes</b> — voz principal, coros</div>
+          <div><b style="color:var(--ink)">Iván Fernández</b> — batería, voz, coros</div>
+          <div><b style="color:var(--ink)">Manolo Sueiro</b> — guitarra rítmica, voz, coros</div>
+          <div><b style="color:var(--ink)">Alberto Mateos</b> — guitarra solista</div>
+          <div><b style="color:var(--ink)">Josema Albarracín</b> — bajo</div>
 
-    <div class="divider"></div>
+          <div class="divider"></div>
 
-    <div style="color:var(--muted)">
-      <b style="color:var(--ink)">Carlos López</b> — técnico de sonido
-    </div>
-  </div>
-</div>
+          <div style="color:var(--muted)">
+            <b style="color:var(--ink)">Carlos López</b> — técnico de sonido
+          </div>
+        </div>
+      </div>
 
-
+      <div class="card pad">
+        <h2>Prensa / Técnica</h2>
+        <div class="list">
+          <div>Formato: banda completa rock</div>
+          <div>Backline profesional completo</div>
+          <div>Rider: escenario 5×4m, 230V</div>
+        </div>
+      </div>
 
       <div class="card pad contact-card" id="contacto">
         <h2>Contacto</h2>
@@ -330,14 +384,22 @@ END:VCARD`;
     });
   </script>
 
-  <div id="modal-contacto" style="display:none; position:fixed; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.72); z-index:1000; align-items:center; justify-content:center;">
-    <div style="background:#222; color:#fff; padding:38px 28px; border-radius:20px; min-width:260px; box-shadow:0 8px 40px #000; max-width:90vw; text-align:center; position:relative;">
+  <!-- Modal Reservar fecha -->
+  <div id="modal-contacto">
+    <div class="modal-card">
       <strong style="font-size:22px;">Contacto La Mala Hora</strong>
       <div style="margin:16px 0 18px;">
-        <div style="margin-bottom:8px;"><a style="color:#e84862;" href="tel:+34667638839">667 63 88 39</a></div>
-        <div><a style="color:#e84862;" href="mailto:lamalahorasanroque@gmail.com">lamalahorasanroque@gmail.com</a></div>
+        <div style="margin-bottom:8px;">
+          <a style="color:#e84862;" href="tel:+34667638839">667 63 88 39</a>
+        </div>
+        <div>
+          <a style="color:#e84862;" href="mailto:lamalahorasanroque@gmail.com">lamalahorasanroque@gmail.com</a>
+        </div>
       </div>
-      <button onclick="document.getElementById('modal-contacto').style.display='none';" style="background:#fff; color:#111; border-radius:8px; border:none; padding:8px 22px; font-weight:bold; cursor:pointer;">Cerrar</button>
+      <button onclick="document.getElementById('modal-contacto').style.display='none';"
+        style="background:#fff; color:#111; border-radius:8px; border:none; padding:8px 22px; font-weight:bold; cursor:pointer;">
+        Cerrar
+      </button>
     </div>
   </div>
 </body>
