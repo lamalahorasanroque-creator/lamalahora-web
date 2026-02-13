@@ -35,7 +35,12 @@
       flex-wrap:wrap;
     }
 
-    .logo{display:flex;gap:14px;align-items:center}
+    .logo{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      flex-wrap:wrap; /* por si en móvil no cabe todo */
+    }
 
     /* FOTO ARRIBA (grande y legible) */
     .logo-badge{
@@ -55,11 +60,35 @@
       object-position:50% 12%;
     }
 
+    /* LOGO A LA DERECHA (ajustadito) */
+    .logo-mark{
+      height:190px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:6px 0;
+      flex:0 1 auto;
+    }
+    .logo-mark img{
+      height:100%;
+      width:auto;
+      max-width:420px; /* controla que no invada el nav */
+      display:block;
+      object-fit:contain;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.45));
+    }
+
     @media (max-width:560px){
       .logo-badge{
         width:140px;
         height:140px;
         border-radius:22px;
+      }
+      .logo-mark{
+        height:140px;
+      }
+      .logo-mark img{
+        max-width:260px;
       }
     }
 
@@ -109,6 +138,11 @@
         <div class="logo-badge">
           <img src="/foto-arriba.jpg" alt="La Mala Hora">
         </div>
+
+        <!-- Logo a la derecha -->
+        <div class="logo-mark">
+          <img src="/logo.png" alt="Logo La Mala Hora">
+        </div>
       </div>
 
       <nav>
@@ -122,11 +156,10 @@
       <div class="card pad">
         <!-- Quitados: h1 "La Mala Hora" y la tag "Rock potente desde San Roque, Cádiz" -->
         <p style="color:var(--muted);margin:0">
-  La Mala Hora es rock de los 80 hasta hoy, con un repertorio sólido, grandes voces y un directo potente.<br><br>
-  Cuidamos el espectáculo y la conexión con el público: energía, humor e interacción constante.<br><br>
-  Con experiencia en todo tipo de escenarios por España, y con técnico propio para garantizar un sonido a la altura.
-</p>
-
+          La Mala Hora es rock de los 80 hasta hoy, con un repertorio sólido, grandes voces y un directo potente.<br><br>
+          Cuidamos el espectáculo y la conexión con el público: energía, humor e interacción constante.<br><br>
+          Con experiencia en todo tipo de escenarios por España, y con técnico propio para garantizar un sonido a la altura.
+        </p>
 
         <div class="cta-row">
           <a class="btn primary" href="javascript:void(0);" onclick="document.getElementById('modal-contacto').style.display='flex';">Reservar fecha</a>
