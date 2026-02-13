@@ -91,45 +91,47 @@
 
     /* ===== MÓVIL: LOGO IZQUIERDA GRANDE + FOTO DERECHA MÁS PEQUEÑA ===== */
     @media (max-width:560px){
-      .logo{
-        flex-wrap:nowrap;
-        width:100%;
-        align-items:center;
-      }
+  .logo{
+    flex-wrap:nowrap;
+    width:100%;
+    align-items:center;
+    gap:10px; /* un pelín menos para ganar espacio */
+  }
 
-      /* Orden: logo primero, foto después */
-      .logo-mark{ order:1; }
-      .logo-badge{ order:2; }
+  /* Orden: logo primero, foto después */
+  .logo-mark{ order:1; }
+  .logo-badge{ order:2; }
 
-      /* Logo más grande */
-      .logo-mark{
-        height:140px;
-        flex:1 1 auto;
-        min-width:0;
-        justify-content:flex-start;
-      }
-      .logo-mark img{
-        height:100%;
-        max-width:100%;
-        width:auto;
-        object-fit:contain;
-      }
+  /* Logo más grande */
+  .logo-mark{
+    height:155px;
+    flex:1 1 auto;
+    min-width:0;
+    justify-content:flex-start;
+  }
+  .logo-mark img{
+    height:100%;
+    max-width:100%;
+    width:auto;
+    object-fit:contain;
+  }
 
-      /* Foto un pelín más pequeña */
-      .logo-badge{
-        width:110px;
-        height:110px;
-        border-radius:18px;
-        flex:0 0 auto;
-      }
+  /* Foto más pequeña */
+  .logo-badge{
+    width:95px;
+    height:95px;
+    border-radius:16px;
+    flex:0 0 auto;
+  }
 
-      /* Menú debajo y centrado */
-      nav{
-        width:100%;
-        justify-content:center;
-        margin-left:0;
-      }
-    }
+  /* Menú debajo y centrado */
+  nav{
+    width:100%;
+    justify-content:center;
+    margin-left:0;
+  }
+}
+
 
     .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center}
     @media (max-width:860px){.hero{grid-template-columns:1fr;}}
