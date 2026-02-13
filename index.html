@@ -80,14 +80,20 @@
       max-width:100%;
     }
 
-    nav{display:flex;gap:14px;flex-wrap:wrap;margin-left:auto}
-    nav a{
-      padding:10px 14px;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:999px;
-      color:var(--muted)
-    }
-    nav a:hover{border-color:rgba(255,255,255,.25);color:var(--ink)}
+   nav a{
+  padding:10px 14px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;
+  color:var(--muted);
+  background: rgba(255,255,255,.06);   /* <-- más visible */
+  backdrop-filter: blur(6px);          /* opcional, queda guay */
+}
+
+nav a:hover{
+  border-color:rgba(255,255,255,.25);
+  color:var(--ink);
+  background: rgba(255,255,255,.10);   /* <-- hover más claro */
+}
 
     /* ===== MÓVIL: LOGO IZQUIERDA GRANDE + FOTO DERECHA MÁS PEQUEÑA ===== */
     @media (max-width:560px){
@@ -179,8 +185,8 @@
       </div>
 
       <nav>
-        <a href="#demo">Videos</a>
-        <a href="#repertorio">Músicos</a>
+        <a href="#videos">Videos</a>
+        <a href="#musicos">Músicos</a>
         <a href="#contacto">Contacto</a>
       </nav>
     </header>
