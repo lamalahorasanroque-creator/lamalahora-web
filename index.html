@@ -192,6 +192,13 @@
         padding:14px;
       }
     }
+/* ===== “Modo oscuro” fake para Google Calendar embed ===== */
+@media (prefers-color-scheme: dark){
+  .cal-embed{
+    filter: invert(1) hue-rotate(180deg);
+    background: transparent;
+  }
+}
 
     /* ===== Modal Reservar fecha ===== */
     #modal-contacto{
