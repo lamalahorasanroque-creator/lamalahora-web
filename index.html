@@ -96,6 +96,7 @@
       color:var(--muted);
       background: rgba(255,255,255,.11);
       backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
     nav a:hover{
       border-color:rgba(255,255,255,.28);
@@ -192,13 +193,56 @@
         padding:14px;
       }
     }
-/* ===== “Modo oscuro” fake para Google Calendar embed ===== */
-@media (prefers-color-scheme: dark){
-  .cal-embed{
-    filter: invert(1) hue-rotate(180deg);
-    background: transparent;
-  }
-}
+
+    /* ===== TODO: Integración visual del calendario (estilo pestañas) ===== */
+
+    /* Botón cerrar calendario = estilo pestañas nav */
+    #close-calendar{
+      padding:10px 14px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      color:var(--muted);
+      background: rgba(255,255,255,.11);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    #close-calendar:hover{
+      border-color:rgba(255,255,255,.28);
+      color:var(--ink);
+      background: rgba(255,255,255,.16);
+    }
+
+    /* Marco tipo “pestaña” alrededor del calendario */
+    .cal-wrap{
+      background: rgba(255,255,255,.11);
+      border: 1px solid rgba(255,255,255,.14);
+      padding:10px;
+      border-radius:14px;
+    }
+    .cal-embed{
+      border-radius:12px;
+    }
+
+    /* Tinte suave encima para que no cante tanto (solo modo oscuro) */
+    @media (prefers-color-scheme: dark){
+      .cal-wrap{ position:relative; }
+      .cal-wrap::after{
+        content:"";
+        position:absolute;
+        inset:0;
+        border-radius:14px;
+        background: rgba(255,255,255,.06);
+        pointer-events:none;
+      }
+    }
+
+    /* Dark fake para el iframe de Google Calendar */
+    @media (prefers-color-scheme: dark){
+      .cal-embed{
+        filter: invert(1) hue-rotate(180deg);
+        background: transparent;
+      }
+    }
 
     /* ===== Modal Reservar fecha ===== */
     #modal-contacto{
