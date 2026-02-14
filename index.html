@@ -175,7 +175,23 @@
     /* ===== Calendario embed (Bolos cerrados) ===== */
     .cal-wrap{ width:100%; border-radius:14px; overflow:hidden; }
     .cal-embed{ width:100%; height:720px; border:0; display:block; }
-    @media (max-width:560px){ .cal-embed{ height:620px; } }
+    @media (max-width:560px){ .cal-embed{ height:640px; } }
+
+    /* ===== Calendario: más ancho en móvil (full-bleed) ===== */
+    .calendar-card{ position:relative; }
+    @media (max-width:560px){
+      .calendar-card{
+        margin-left:-24px;
+        margin-right:-24px;
+        border-radius:0;
+      }
+      .calendar-card .cal-wrap{
+        border-radius:0;
+      }
+      .calendar-card.pad{
+        padding:14px;
+      }
+    }
 
     /* ===== Modal Reservar fecha ===== */
     #modal-contacto{
@@ -305,7 +321,7 @@
 
 <body>
   <div class="wrap">
-    <header>
+    <header id="top">
       <div class="logo">
         <div class="logo-badge">
           <img src="/foto-arriba.jpg" alt="La Mala Hora">
@@ -363,12 +379,16 @@
       </div>
     </section>
 
-    <!-- NUEVO: Calendario (Bolos cerrados) -->
-    <section class="card pad" style="margin-top:22px">
+    <!-- Calendario (Bolos cerrados) -->
+    <section class="card pad calendar-card" style="margin-top:22px">
       <h2 id="calendario">Bolos cerrados</h2>
       <p class="small">Consulta por meses los días ya ocupados (Ocupado + lugar).</p>
 
-      <div class="cal-wrap">
+      <div class="cta-row" style="margin-top:10px">
+        <a class="btn" href="#top" id="close-calendar">Cerrar calendario ✕</a>
+      </div>
+
+      <div class="cal-wrap" style="margin-top:12px">
         <iframe
           class="cal-embed"
           src="https://calendar.google.com/calendar/embed?height=700&wkst=2&ctz=Europe%2FMadrid&showPrint=0&showCalendars=0&showTz=0&hl=es&src=MWRlOGEwZWNlODQ1MGI3ZDU3MjNmYTUzMDNiOWZkNjkxYzFmODYwZTc1ZmIzMGZlMDM2NzgxNWZiODkxYjkzZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
@@ -463,7 +483,6 @@
 
     function openModal(){
       modal.style.display = 'flex';
-      // forzamos reflow para que la transición/animación entre bien al abrir
       void modal.offsetHeight;
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden','false');
@@ -474,11 +493,7 @@
       modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden','true');
       document.body.classList.remove('modal-open');
-
-      // esperamos a que el overlay haga fade-out
-      setTimeout(()=>{
-        modal.style.display = 'none';
-      }, 180);
+      setTimeout(()=>{ modal.style.display = 'none'; }, 180);
     }
 
     openModalBtn.addEventListener('click', (e)=>{
@@ -488,12 +503,10 @@
 
     closeModalBtn.addEventListener('click', closeModal);
 
-    // Cerrar clicando fuera (overlay)
     modal.addEventListener('click', (e)=>{
       if(e.target === modal) closeModal();
     });
 
-    // Cerrar con Escape
     document.addEventListener('keydown', (e)=>{
       if(e.key === 'Escape' && modal.style.display === 'flex') closeModal();
     });
@@ -534,6 +547,17 @@ END:VCARD`;
         alert('No se pudo copiar. Copia manualmente de la barra del navegador.');
       }
     });
+
+    // ===== Cerrar calendario (sube arriba + limpia el hash) =====
+    const closeCal = document.getElementById('close-calendar');
+    if(closeCal){
+      closeCal.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const top = document.getElementById('top');
+        if(top) top.scrollIntoView({ behavior: 'smooth' });
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      });
+    }
   </script>
 </body>
 </html>
