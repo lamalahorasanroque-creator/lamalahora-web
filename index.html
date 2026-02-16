@@ -482,7 +482,8 @@
 
         <div class="cta-row">
           <a class="btn" href="#" id="open-modal">Reservar fecha</a>
-          <a class="btn" id="add-contact" href="/LaMalaHora.vcf" download>Guardar contacto (vCard)</a>
+          <a class="btn" id="add-contact" href="/LaMalaHora.vcf">Guardar contacto</a>
+          <a class="btn" id="add-contact-dl" href="/LaMalaHora.vcf" download style="opacity:.85">Descargar vCard</a>
           <a class="btn" id="copy-link" href="#">Copiar enlace</a>
           <a class="btn" href="https://www.facebook.com/lamalahorasanroque" target="_blank" rel="noopener">📘 Facebook</a>
         </div>
@@ -679,6 +680,33 @@
     });
 
     // ===== vCard (archivo estático) =====
+    // ===== Guardar contacto: modo universal =====
+    // Intentamos abrir/importar en móvil (mejor compatibilidad que depender del servidor/MIME).
+    const vcfUrl = "/LaMalaHora.vcf";
+    const addBtn = document.getElementById("add-contact");
+
+    if(addBtn){
+      addBtn.addEventListener("click", async (e)=>{
+        e.preventDefault();
+
+        try{
+          const res = await fetch(vcfUrl, { cache: "no-store" });
+          const txt = await res.text();
+
+          // Creamos un Blob con MIME correcto (ayuda a que el sistema lo trate como vCard)
+          const blob = new Blob([txt], { type: "text/vcard;charset=utf-8" });
+          const url = URL.createObjectURL(blob);
+
+          // En móvil suele disparar el importador mejor así
+          window.location.href = url;
+
+          setTimeout(()=>URL.revokeObjectURL(url), 4000);
+        }catch(err){
+          // Fallback: abrir el archivo directamente
+          window.location.href = vcfUrl;
+        }
+      });
+    }
     // El botón descarga /LaMalaHora.vcf desde la web (colócalo en /public).
 
     // ===== Copiar enlace =====
