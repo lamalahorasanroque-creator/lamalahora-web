@@ -313,6 +313,28 @@
       line-height:1.1;
     }
 
+    /* ===== Contacto: mini logo arriba ===== */
+    .contact-header{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:2px;
+    }
+    .contact-logo{
+      width:56px;
+      height:56px;
+      border-radius:14px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+      padding:6px;
+      object-fit:contain;
+      box-shadow:0 10px 22px rgba(0,0,0,.28);
+      flex:0 0 auto;
+    }
+    @media (max-width:560px){
+      .contact-logo{ width:52px; height:52px; border-radius:12px; }
+    }
+
     /* ===== Modal Reservar fecha ===== */
     #modal-contacto{
       display:none;
@@ -558,7 +580,10 @@
       </div>
 
       <div class="card pad contact-card" id="contacto">
-        <h2>Contacto</h2>
+        <div class="contact-header">
+          <img class="contact-logo" src="/logo-mini.png" alt="La Mala Hora" loading="lazy" width="56" height="56">
+          <h2 style="margin:0">Contacto</h2>
+        </div>
 
         <a class="btn" href="tel:+34667638839">📞 +34 667 63 88 39</a>
         <a class="btn" href="mailto:lamalahorasanroque@gmail.com">✉️ lamalahorasanroque@gmail.com</a>
@@ -653,25 +678,24 @@
     });
 
     // ===== vCard automática (con logo + web final) =====
-    // IMPORTANTE: sube un PNG cuadrado como /logo-mini.png (256x256 o 512x512)
-    // Si no lo tienes aún, puedes usar /logo.png, pero quedará más raro en contactos.
+    // IMPORTANTE: sube /logo-mini.png a tu web (público) y que exista:
+    // https://lamalahora.es/logo-mini.png
     function buildVCard(){
       const lines = [
         "BEGIN:VCARD",
         "VERSION:3.0",
+        "N:;La Mala Hora;;;",
         "FN:La Mala Hora",
         "ORG:La Mala Hora",
         "TITLE:Banda de Rock",
-        "TEL;TYPE=CELL:+34667638839",
-        "EMAIL;TYPE=WORK:lamalahorasanroque@gmail.com",
+        "TEL;TYPE=CELL;TYPE=VOICE;PREF=1:+34667638839",
+        "EMAIL;TYPE=INTERNET;TYPE=WORK:lamalahorasanroque@gmail.com",
         "URL:https://lamalahora.es",
         "NOTE:Rock desde San Roque, Cádiz",
         "CATEGORIES:Music,Band,Rock",
-        // Mini logo (URI). Android suele aceptarlo si es accesible por HTTPS.
         "PHOTO;VALUE=URI:https://lamalahora.es/logo-mini.png",
         "END:VCARD"
       ];
-      // Android y iOS suelen preferir CRLF
       return lines.join("\r\n");
     }
 
@@ -690,7 +714,6 @@
       a.click();
       a.remove();
 
-      // Limpieza
       setTimeout(()=>URL.revokeObjectURL(url), 2500);
     });
 
