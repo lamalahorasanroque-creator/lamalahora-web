@@ -313,29 +313,6 @@
       line-height:1.1;
     }
 
-
-    /* ===== Contacto: mini logo arriba ===== */
-    .contact-header{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-bottom:2px;
-    }
-    .contact-logo{
-      width:56px;
-      height:56px;
-      border-radius:14px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.14);
-      padding:6px;
-      object-fit:contain;
-      box-shadow:0 10px 22px rgba(0,0,0,.28);
-      flex:0 0 auto;
-    }
-    @media (max-width:560px){
-      .contact-logo{ width:52px; height:52px; border-radius:12px; }
-    }
-
     /* ===== Modal Reservar fecha ===== */
     #modal-contacto{
       display:none;
@@ -441,12 +418,52 @@
       #modal-contacto{ transition:none !important; }
       .modal-card{ opacity:1 !important; transform:none !important; }
     }
+
+    /* ===== DESKTOP: logo grande a la derecha + botones debajo ===== */
+    @media (min-width: 900px){
+      header{
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+      }
+
+      .logo{
+        width: 100%;
+        display: grid;
+        grid-template-columns: 190px 1fr;
+        gap: 22px;
+        align-items: center;
+      }
+
+      .logo-mark{
+        height: clamp(240px, 18vw, 340px); /* más grande en PC */
+        justify-content: flex-end;
+        padding: 0;
+      }
+
+      .logo-mark img{
+        height: 100%;
+        width: 100%;
+        max-width: none;
+        object-fit: contain;
+      }
+
+      nav{
+        width: 100%;
+        margin: 0;
+        justify-content: space-evenly;
+      }
+
+      nav a{
+        padding: 12px 18px;
+      }
+    }
   </style>
 </head>
 
 <body>
   <!-- SPLASH -->
-  <div id="splash" aria-label="Pantalla de bienvenida" onclick="this.classList.add('is-hidden'); setTimeout(()=>{ this.style.display='none'; }, 320)">
+  <div id="splash" aria-label="Pantalla de bienvenida">
     <div class="splash-inner">
       <img class="splash-logo" src="/logo.png" alt="Logo La Mala Hora" id="splash-logo">
     </div>
@@ -482,8 +499,8 @@
 
         <div class="cta-row">
           <a class="btn" href="#" id="open-modal">Reservar fecha</a>
-          <a class="btn" id="add-contact" href="/LaMalaHora.vcf">Guardar contacto</a>
-          <a class="btn" id="add-contact-dl" href="/LaMalaHora.vcf" download style="opacity:.85">Descargar vCard</a>
+          <a class="btn" id="add-contact" href="#">Guardar contacto (vCard)</a>
+          <a class="btn" id="download-vcard" href="#">Descargar vCard</a>
           <a class="btn" id="copy-link" href="#">Copiar enlace</a>
           <a class="btn" href="https://www.facebook.com/lamalahorasanroque" target="_blank" rel="noopener">📘 Facebook</a>
         </div>
@@ -582,10 +599,7 @@
       </div>
 
       <div class="card pad contact-card" id="contacto">
-        <div class="contact-header">
-          <img class="contact-logo" src="/logo-mini.png" alt="La Mala Hora" loading="lazy" width="56" height="56">
-          <h2 style="margin:0">Contacto</h2>
-        </div>
+        <h2>Contacto</h2>
 
         <a class="btn" href="tel:+34667638839">📞 +34 667 63 88 39</a>
         <a class="btn" href="mailto:lamalahorasanroque@gmail.com">✉️ lamalahorasanroque@gmail.com</a>
@@ -679,35 +693,49 @@
       if(e.key === 'Escape' && modal.style.display === 'flex') closeModal();
     });
 
-    // ===== vCard (archivo estático) =====
-    // ===== Guardar contacto: modo universal =====
-    // Intentamos abrir/importar en móvil (mejor compatibilidad que depender del servidor/MIME).
-    const vcfUrl = "/LaMalaHora.vcf";
-    const addBtn = document.getElementById("add-contact");
-
-    if(addBtn){
-      addBtn.addEventListener("click", async (e)=>{
-        e.preventDefault();
-
-        try{
-          const res = await fetch(vcfUrl, { cache: "no-store" });
-          const txt = await res.text();
-
-          // Creamos un Blob con MIME correcto (ayuda a que el sistema lo trate como vCard)
-          const blob = new Blob([txt], { type: "text/vcard;charset=utf-8" });
-          const url = URL.createObjectURL(blob);
-
-          // En móvil suele disparar el importador mejor así
-          window.location.href = url;
-
-          setTimeout(()=>URL.revokeObjectURL(url), 4000);
-        }catch(err){
-          // Fallback: abrir el archivo directamente
-          window.location.href = vcfUrl;
-        }
-      });
+    // ===== vCard universal: 2 botones =====
+    function vCardText(){
+      const lines = [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        "FN:La Mala Hora",
+        "ORG:La Mala Hora",
+        "TITLE:Banda de Rock",
+        "TEL;TYPE=CELL:+34667638839",
+        "EMAIL;TYPE=WORK:lamalahorasanroque@gmail.com",
+        "URL:https://lamalahora.es",
+        "NOTE:Rock desde San Roque, Cádiz",
+        "CATEGORIES:Music,Band,Rock",
+        "END:VCARD"
+      ];
+      return lines.join("\r\n");
     }
-    // El botón descarga /LaMalaHora.vcf desde la web (colócalo en /public).
+
+    function downloadVCard(filename="LaMalaHora.vcf"){
+      const blob = new Blob([vCardText()], { type: "text/vcard;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url), 2500);
+    }
+
+    // Guardar contacto (móvil-friendly)
+    const addBtn = document.getElementById('add-contact');
+    addBtn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      downloadVCard("LaMalaHora.vcf");
+    });
+
+    // Descargar vCard (explícito)
+    const dlBtn = document.getElementById('download-vcard');
+    dlBtn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      downloadVCard("LaMalaHora.vcf");
+    });
 
     // ===== Copiar enlace =====
     const copyBtn = document.getElementById('copy-link');
