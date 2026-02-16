@@ -244,6 +244,43 @@
       }
     }
 
+    /* ===== Rider / Producción: botón + técnico ===== */
+    .rider-actions{
+      display:grid;
+      gap:12px;
+      margin-top:14px;
+    }
+    .tech-card{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .tech-photo{
+      width:56px;
+      height:56px;
+      border-radius:999px;
+      object-fit:cover;
+      border:1px solid rgba(255,255,255,.22);
+      flex:0 0 auto;
+    }
+    .tech-role{
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.1;
+      margin-bottom:2px;
+    }
+    .tech-name{
+      font-weight:800;
+      color:var(--ink);
+      line-height:1.1;
+    }
+
     /* ===== Modal Reservar fecha ===== */
     #modal-contacto{
       display:none;
@@ -473,7 +510,7 @@
         </div>
       </div>
 
-      <!-- ACTUALIZADO: Rider / Producción -->
+      <!-- ACTUALIZADO: Rider / Producción (botón + foto técnico) -->
       <div class="card pad">
         <h2>Rider / Producción</h2>
         <div class="list">
@@ -481,6 +518,27 @@
           <div><b style="color:var(--ink)">Técnico propio:</b> sí</div>
           <div><b style="color:var(--ink)">Escenario recomendado:</b> 6×4 m <span style="color:var(--muted)">(mínimo 5×4 m)</span></div>
           <div><b style="color:var(--ink)">Rider técnico completo:</b> disponible en PDF</div>
+        </div>
+
+        <div class="rider-actions">
+          <a class="btn" href="/rider-tecnico-la-mala-hora.pdf" download target="_blank" rel="noopener">
+            📄 Descargar Rider Técnico (PDF)
+          </a>
+
+          <div class="tech-card">
+            <img
+              class="tech-photo"
+              src="/carlos-lopez.jpg"
+              alt="Carlos López — técnico de sonido"
+              loading="lazy"
+              width="56"
+              height="56"
+            />
+            <div>
+              <div class="tech-role">Técnico</div>
+              <div class="tech-name">Carlos López</div>
+            </div>
+          </div>
         </div>
       </div>
 
