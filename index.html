@@ -652,28 +652,46 @@
       if(e.key === 'Escape' && modal.style.display === 'flex') closeModal();
     });
 
-    // ===== vCard automática =====
-    const vcard = `BEGIN:VCARD
-VERSION:3.0
-N:;La Mala Hora;;;
-FN:La Mala Hora
-ORG:La Mala Hora (Rock - San Roque)
-TITLE:Banda de Rock
-TEL;TYPE=CELL;TYPE=VOICE;PREF=1:+34667638839
-EMAIL;TYPE=INTERNET;TYPE=WORK:lamalahorasanroque@gmail.com
-URL:https://lamalahora-web.vercel.app
-NOTE:Rock desde San Roque, Cádiz
-END:VCARD`;
+    // ===== vCard automática (con logo + web final) =====
+    // IMPORTANTE: sube un PNG cuadrado como /logo-mini.png (256x256 o 512x512)
+    // Si no lo tienes aún, puedes usar /logo.png, pero quedará más raro en contactos.
+    function buildVCard(){
+      const lines = [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        "FN:La Mala Hora",
+        "ORG:La Mala Hora",
+        "TITLE:Banda de Rock",
+        "TEL;TYPE=CELL:+34667638839",
+        "EMAIL;TYPE=WORK:lamalahorasanroque@gmail.com",
+        "URL:https://lamalahora.es",
+        "NOTE:Rock desde San Roque, Cádiz",
+        "CATEGORIES:Music,Band,Rock",
+        // Mini logo (URI). Android suele aceptarlo si es accesible por HTTPS.
+        "PHOTO;VALUE=URI:https://lamalahora.es/logo-mini.png",
+        "END:VCARD"
+      ];
+      // Android y iOS suelen preferir CRLF
+      return lines.join("\r\n");
+    }
 
-    const vBlob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
-    const vUrl = URL.createObjectURL(vBlob);
     const addBtn = document.getElementById('add-contact');
     addBtn.addEventListener('click', (e)=>{
       e.preventDefault();
-      const a=document.createElement('a');
-      a.href=vUrl;
-      a.download='LaMalaHora.vcf';
+
+      const vcard = buildVCard();
+      const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "LaMalaHora.vcf";
+      document.body.appendChild(a);
       a.click();
+      a.remove();
+
+      // Limpieza
+      setTimeout(()=>URL.revokeObjectURL(url), 2500);
     });
 
     // ===== Copiar enlace =====
