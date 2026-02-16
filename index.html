@@ -28,6 +28,54 @@
     a{color:inherit;text-decoration:none}
     .wrap{max-width:980px;margin:0 auto;padding:24px}
 
+    /* ===== SPLASH / INTRO ===== */
+    #splash{
+      position:fixed;
+      inset:0;
+      z-index:2000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#000;
+      padding:22px;
+      opacity:1;
+      transition: opacity .28s ease;
+    }
+    #splash.is-hidden{
+      opacity:0;
+      pointer-events:none;
+    }
+    .splash-inner{
+      display:grid;
+      gap:14px;
+      justify-items:center;
+      text-align:center;
+    }
+    .splash-logo{
+      width:min(360px, 72vw);
+      height:auto;
+      cursor:pointer;
+      filter: drop-shadow(0 18px 34px rgba(0,0,0,.65));
+      transform: scale(1);
+      transition: transform .18s ease, filter .18s ease;
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+    .splash-logo:hover{
+      transform: scale(1.02);
+      filter: drop-shadow(0 22px 40px rgba(0,0,0,.75));
+    }
+    .splash-hint{
+      font-size:13px;
+      color:rgba(255,255,255,.72);
+    }
+
+    /* Si prefieren menos movimiento */
+    @media (prefers-reduced-motion: reduce){
+      #splash{ transition:none !important; }
+      .splash-logo{ transition:none !important; }
+    }
+
     header{
       display:flex;
       gap:18px;
@@ -194,8 +242,6 @@
       }
     }
 
-    /* ===== TODO: Integración visual del calendario (estilo pestañas) ===== */
-
     /* Botón cerrar calendario = estilo pestañas nav */
     #close-calendar{
       padding:10px 14px;
@@ -303,7 +349,6 @@
     }
 
     .modal-card{
-      /* MISMO estilo que .card */
       background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
       border:1px solid rgba(255,255,255,.08);
       border-radius:22px;
@@ -315,12 +360,10 @@
       max-width:90vw;
       text-align:center;
 
-      /* Arranque del “enter” (fade+scale) */
       opacity:0;
       transform: translateY(6px) scale(.98);
     }
 
-    /* Enter suave + luego pulso */
     #modal-contacto.is-open .modal-card{
       animation:
         modalEnter .22s ease-out forwards,
@@ -341,10 +384,7 @@
     }
 
     @keyframes modalEnter{
-      to{
-        opacity:1;
-        transform: translateY(0) scale(1);
-      }
+      to{ opacity:1; transform: translateY(0) scale(1); }
     }
 
     @keyframes pulseModal{
@@ -377,11 +417,7 @@
     }
 
     @keyframes pulseCTA{
-      0%,100%{
-        transform: translateY(0) scale(1);
-        box-shadow: none;
-        filter: brightness(1);
-      }
+      0%,100%{ transform: translateY(0) scale(1); box-shadow: none; filter: brightness(1); }
       50%{
         transform: translateY(-1px) scale(1.03);
         box-shadow: 0 10px 30px rgba(0,0,0,.35), 0 0 18px rgba(255,61,90,.45);
@@ -389,13 +425,9 @@
       }
     }
 
-    /* REMATE: cuando el modal está abierto, paramos el pulso del botón */
     body.modal-open #open-modal{ animation:none !important; }
-
-    /* REMATE: cuando modal abierto, bloqueamos scroll */
     body.modal-open{ overflow:hidden; }
 
-    /* Accesibilidad: si el usuario prefiere menos movimiento */
     @media (prefers-reduced-motion: reduce){
       #open-modal, #modal-contacto.is-open .modal-card{
         animation: none !important;
@@ -408,6 +440,14 @@
 </head>
 
 <body>
+  <!-- SPLASH -->
+  <div id="splash" aria-label="Pantalla de bienvenida">
+    <div class="splash-inner">
+      <img class="splash-logo" src="/logo.png" alt="Logo La Mala Hora" id="splash-logo">
+      <div class="splash-hint">Toca el logo para entrar (o espera un segundo)</div>
+    </div>
+  </div>
+
   <div class="wrap">
     <header id="top">
       <div class="logo">
@@ -510,7 +550,6 @@
         </div>
       </div>
 
-      <!-- ACTUALIZADO: Rider / Producción (botón + foto técnico) -->
       <div class="card pad">
         <h2>Rider / Producción</h2>
         <div class="list">
@@ -526,14 +565,7 @@
           </a>
 
           <div class="tech-card">
-            <img
-              class="tech-photo"
-              src="/carlos-lopez.jpg"
-              alt="Carlos López — técnico de sonido"
-              loading="lazy"
-              width="56"
-              height="56"
-            />
+            <img class="tech-photo" src="/carlos-lopez.jpg" alt="Carlos López — técnico de sonido" loading="lazy" width="56" height="56" />
             <div>
               <div class="tech-role">Técnico</div>
               <div class="tech-name">Carlos López</div>
@@ -586,6 +618,30 @@
   <script>
     // Año dinámico
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    // ===== SPLASH (click o timeout) =====
+    const splash = document.getElementById('splash');
+    const splashLogo = document.getElementById('splash-logo');
+
+    function hideSplash(){
+      if(!splash || splash.classList.contains('is-hidden')) return;
+      splash.classList.add('is-hidden');
+      // lo quitamos del flujo después del fade
+      setTimeout(()=>{ splash.style.display = 'none'; }, 320);
+    }
+
+    // click en cualquier sitio del splash
+    if(splash){
+      splash.addEventListener('click', hideSplash);
+    }
+    // click en logo (por si luego cambias el handler general)
+    if(splashLogo){
+      splashLogo.addEventListener('click', (e)=>{ e.stopPropagation(); hideSplash(); });
+    }
+
+    // auto-entrada
+    const AUTO_ENTER_MS = 2200;
+    setTimeout(hideSplash, AUTO_ENTER_MS);
 
     // ===== Modal (abrir/cerrar) =====
     const modal = document.getElementById('modal-contacto');
