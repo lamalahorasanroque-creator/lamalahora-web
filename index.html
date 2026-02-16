@@ -172,8 +172,8 @@
       }
     }
 
-    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center}
-    @media (max-width:860px){.hero{grid-template-columns:1fr;}}
+    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:start;margin-top:34px}
+    @media (max-width:860px){.hero{grid-template-columns:1fr;margin-top:22px}}
 
     /* ===== Ajustes SOLO PC: alinear Facebook + bajar botones ===== */
     @media (min-width:861px){
@@ -186,7 +186,16 @@
         min-height:640px; /* para que los botones puedan ir abajo y “respire” como el bloque de Facebook */
       }
       /* Botones + KPIs al fondo, separados del texto */
-      .hero-left .cta-row{margin-top:auto;padding-top:18px;}
+      .hero-left .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+/* ===== Ajustes de layout SOLO PC (no toca móvil) ===== */
+@media (min-width: 861px){
+  header{ padding-bottom:28px; }
+  .hero{ margin-top:46px; gap:34px; }
+  /* Separamos botones del texto principal */
+  .hero .cta-row{ margin-top:32px; }
+  .hero .kpi{ margin-top:18px !important; }
+}
+
       .hero-left .kpi{margin-top:12px;}
 
       /* Facebook sin empujón extra (lo dejamos “natural”) */
