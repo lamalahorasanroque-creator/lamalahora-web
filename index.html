@@ -28,7 +28,7 @@
     a{color:inherit;text-decoration:none}
     .wrap{max-width:980px;margin:0 auto;padding:24px}
 
-    /* ===== SPLASH / INTRO ===== */
+    /* ===== SPLASH / INTRO (auto 6s + click) ===== */
     #splash{
       position:fixed;
       inset:0;
@@ -47,7 +47,6 @@
     }
     .splash-inner{
       display:grid;
-      gap:14px;
       justify-items:center;
       text-align:center;
     }
@@ -56,24 +55,11 @@
       height:auto;
       cursor:pointer;
       filter: drop-shadow(0 18px 34px rgba(0,0,0,.65));
-      transform: scale(1);
-      transition: transform .18s ease, filter .18s ease;
       user-select:none;
       -webkit-user-drag:none;
     }
-    .splash-logo:hover{
-      transform: scale(1.02);
-      filter: drop-shadow(0 22px 40px rgba(0,0,0,.75));
-    }
-    .splash-hint{
-      font-size:13px;
-      color:rgba(255,255,255,.72);
-    }
-
-    /* Si prefieren menos movimiento */
     @media (prefers-reduced-motion: reduce){
       #splash{ transition:none !important; }
-      .splash-logo{ transition:none !important; }
     }
 
     header{
@@ -339,14 +325,10 @@
       justify-content:center;
       padding:18px;
 
-      /* REMATE: fade del overlay */
       opacity:0;
       transition: opacity .18s ease;
     }
-    /* cuando abrimos */
-    #modal-contacto.is-open{
-      opacity:1;
-    }
+    #modal-contacto.is-open{ opacity:1; }
 
     .modal-card{
       background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
@@ -444,7 +426,6 @@
   <div id="splash" aria-label="Pantalla de bienvenida">
     <div class="splash-inner">
       <img class="splash-logo" src="/logo.png" alt="Logo La Mala Hora" id="splash-logo">
-      <div class="splash-hint">Toca el logo para entrar (o espera un segundo)</div>
     </div>
   </div>
 
@@ -464,6 +445,7 @@
         <a href="#calendario">Calendario</a>
         <a href="#musicos">Músicos</a>
         <a href="#contacto">Contacto</a>
+        <a href="https://www.youtube.com/channel/UCSpkgEs5119ReuJok0Z6ZSg" target="_blank" rel="noopener">▶️ YouTube</a>
       </nav>
     </header>
 
@@ -550,6 +532,7 @@
         </div>
       </div>
 
+      <!-- Rider / Producción -->
       <div class="card pad">
         <h2>Rider / Producción</h2>
         <div class="list">
@@ -580,7 +563,7 @@
         <a class="btn" href="tel:+34667638839">📞 +34 667 63 88 39</a>
         <a class="btn" href="mailto:lamalahorasanroque@gmail.com">✉️ lamalahorasanroque@gmail.com</a>
 
-        <a class="btn" href="https://wa.me/34667638839?text=Hola%20La%20Mala%20Hora%2C%20quiero%20info%20para%20un%20bolo">
+        <a class="btn" href="https://wa.me/34667638839?text=Hola%20La%20Hora%2C%20quiero%20info%20para%20un%20bolo">
           💬 WhatsApp
         </a>
 
@@ -588,7 +571,7 @@
 
         <div class="list small">
           <div>Instagram: <a href="https://instagram.com/lamalahora" target="_blank" rel="noopener">@lamalahora</a></div>
-          <div>YouTube: <a href="#" target="_blank" rel="noopener">Canal oficial</a></div>
+          <div>YouTube: <a href="https://www.youtube.com/channel/UCSpkgEs5119ReuJok0Z6ZSg" target="_blank" rel="noopener">Canal oficial</a></div>
           <div>Base: San Roque, Cádiz</div>
         </div>
       </div>
@@ -619,29 +602,20 @@
     // Año dinámico
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // ===== SPLASH (click o timeout) =====
+    // ===== SPLASH: click o auto 6s =====
     const splash = document.getElementById('splash');
-    const splashLogo = document.getElementById('splash-logo');
 
     function hideSplash(){
       if(!splash || splash.classList.contains('is-hidden')) return;
       splash.classList.add('is-hidden');
-      // lo quitamos del flujo después del fade
       setTimeout(()=>{ splash.style.display = 'none'; }, 320);
     }
 
-    // click en cualquier sitio del splash
     if(splash){
       splash.addEventListener('click', hideSplash);
     }
-    // click en logo (por si luego cambias el handler general)
-    if(splashLogo){
-      splashLogo.addEventListener('click', (e)=>{ e.stopPropagation(); hideSplash(); });
-    }
 
-    // auto-entrada
-    const AUTO_ENTER_MS = 2200;
-    setTimeout(hideSplash, AUTO_ENTER_MS);
+    setTimeout(hideSplash, 6000);
 
     // ===== Modal (abrir/cerrar) =====
     const modal = document.getElementById('modal-contacto');
