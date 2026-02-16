@@ -178,16 +178,28 @@
     /* ===== Ajustes SOLO PC: alinear Facebook + bajar botones ===== */
     @media (min-width:861px){
       .hero{align-items:stretch;}
-      .hero-left{display:flex;flex-direction:column;}
+      /* Queremos que el bloque de texto baje y arranque a la altura del Facebook */
+      .hero-left{
+        display:flex;
+        flex-direction:column;
+        margin-top:22px;
+        min-height:640px; /* para que los botones puedan ir abajo y “respire” como el bloque de Facebook */
+      }
+      /* Botones + KPIs al fondo, separados del texto */
       .hero-left .cta-row{margin-top:auto;padding-top:18px;}
       .hero-left .kpi{margin-top:12px;}
-      /* Baja un pelín el bloque de Facebook para que quede a la altura del texto */
-      .hero-right{margin-top:18px;}
-    }
-    /* En móvil/tablet no tocamos la vista */
-    @media (max-width:860px){
+
+      /* Facebook sin empujón extra (lo dejamos “natural”) */
       .hero-right{margin-top:0;}
     }
+
+    /* En móvil/tablet no tocamos la vista */
+    @media (max-width:860px){
+      .hero-left{margin-top:0;min-height:auto;}
+      .hero-right{margin-top:0;}
+    }
+
+}
     .card{
       background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
       border:1px solid rgba(255,255,255,.08);
